@@ -44,7 +44,7 @@ resolution
 resolve
 satisfaction
 search
-sine
+sine 
 start
 true
 truth
