@@ -30,9 +30,6 @@ class Variable():
     def __str__(self):
         return f"({self.i}, {self.j}) {self.direction} : {self.length}"
 
-    def __hash__(self):
-        return hash((self.i, self.j, self.direction, self.length))
-
     def __repr__(self):
         direction = repr(self.direction)
         return f"Variable({self.i}, {self.j}, {direction}, {self.length})"
