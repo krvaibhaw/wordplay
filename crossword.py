@@ -58,5 +58,5 @@ class Crossword():
 
         
         # Save vocabulary list
-        with open(words_files, structure_file) as f:
+        with open(words_file, structure_file) as f:
             self.words = set(f.read().upper().splitlines())
