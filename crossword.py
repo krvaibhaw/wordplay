@@ -34,6 +34,7 @@ class Variable():
         direction = repr(self.direction)
         return f"Variable({self.i}, {self.j}, {direction}, {self.length})"
 
+
 class Crossword():
 
     def __init__(self, structure_file, words_file):
@@ -57,6 +58,40 @@ class Crossword():
                 self.structure.append(row)
 
         
+
         # Save vocabulary list
+
         with open(words_file) as f:
             self.words = set(f.read().upper().splitlines())
+
+        
+
+        # Determine variable set
+
+        self.variables = set()
+        
+        for i in range(self.height):
+            
+            for j in range(self.width):
+
+                
+                # Vertical words
+                
+                starts_word = (
+                    self.structure[i][j]
+                    and (i == 0 or not self.structure[i - 1][j])
+                
+                if starts_word:
+                    length = 1
+                    for k in range(i + 1, self.height):
+                        if self.structure[k][j]:
+                            length += 1
+                        else:
+                            continue
+                    if length > 1:
+                        self.variables.add(Variable(
+                            i=i, j=j,
+                            direction=Variable.DOWN,
+                            length=length
+                        ))
+
