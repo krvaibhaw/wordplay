@@ -80,6 +80,7 @@ class Crossword():
                 starts_word = (
                     self.structure[i][j]
                     and (i == 0 or not self.structure[i - 1][j])
+                )
                 
                 if starts_word:
                     length = 1
@@ -87,7 +88,7 @@ class Crossword():
                         if self.structure[k][j]:
                             length += 1
                         else:
-                            continue
+                            break
                     if length > 1:
                         self.variables.add(Variable(
                             i=i, j=j,
