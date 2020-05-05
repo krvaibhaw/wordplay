@@ -96,3 +96,27 @@ class Crossword():
                             length=length
                         ))
 
+			# Horizontal words
+                starts_word = (
+                    self.structure[i][j]
+                    and (j == 0 or not self.structure[i][j - 1])
+                )
+                
+                if starts_word:
+                    
+                    length = 1
+                    
+                    for k in range(j + 1, self.width):
+                        
+                        if self.structure[i][k]:
+                            length += 1
+                        
+                        else:
+                            break
+                    
+                    if length > 1:
+                        self.variables.add(Variable(
+                            i=i, j=j,
+                            direction=Variable.ACROSS,
+                            length=length
+                        ))
