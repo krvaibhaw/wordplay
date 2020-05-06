@@ -120,3 +120,24 @@ class Crossword():
                             direction=Variable.ACROSS,
                             length=length
                         ))
+
+# Compute overlaps for each word
+        # For any pair of variables v1, v2, their overlap is either:
+        #    None, if the two variables do not overlap; or
+        #    (i, j), where v1's ith character overlaps v2's jth character
+        self.overlaps = dict()
+        for v1 in self.variables:
+            for v2 in self.variables:
+                if v1 == v2:
+                    continue
+                cells1 = v1.cells
+                cells2 = v2.cells
+                intersection = set(cells1).intersection(cells2)
+                if not intersection:
+                    self.overlaps[v1, v2] = None
+                else:
+                    intersection = intersection.pop()
+                    self.overlaps[v1, v2] = (
+                        cells1.index(intersection),
+                        cells2.index(intersection)
+                    )
