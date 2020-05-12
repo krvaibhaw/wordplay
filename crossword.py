@@ -57,31 +57,20 @@ class Crossword():
                         row.append(False)
                 self.structure.append(row)
 
-        
-
         # Save vocabulary list
-
         with open(words_file) as f:
             self.words = set(f.read().upper().splitlines())
 
-        
-
         # Determine variable set
-
         self.variables = set()
-        
         for i in range(self.height):
-            
             for j in range(self.width):
 
-                
                 # Vertical words
-                
                 starts_word = (
                     self.structure[i][j]
                     and (i == 0 or not self.structure[i - 1][j])
                 )
-                
                 if starts_word:
                     length = 1
                     for k in range(i + 1, self.height):
@@ -96,24 +85,18 @@ class Crossword():
                             length=length
                         ))
 
-			# Horizontal words
+                # Horizontal words
                 starts_word = (
                     self.structure[i][j]
                     and (j == 0 or not self.structure[i][j - 1])
                 )
-                
                 if starts_word:
-                    
                     length = 1
-                    
                     for k in range(j + 1, self.width):
-                        
                         if self.structure[i][k]:
                             length += 1
-                        
                         else:
                             break
-                    
                     if length > 1:
                         self.variables.add(Variable(
                             i=i, j=j,
@@ -121,7 +104,7 @@ class Crossword():
                             length=length
                         ))
 
-# Compute overlaps for each word
+        # Compute overlaps for each word
         # For any pair of variables v1, v2, their overlap is either:
         #    None, if the two variables do not overlap; or
         #    (i, j), where v1's ith character overlaps v2's jth character
@@ -142,7 +125,7 @@ class Crossword():
                         cells2.index(intersection)
                     )
 
-                    def neighbors(self, var):
+    def neighbors(self, var):
         """Given a variable, return set of overlapping variables."""
         return set(
             v for v in self.variables
