@@ -44,4 +44,45 @@ class CrosswordCreator():
                     print("█", end="")
             print()
 
+    def save(self, assignment, filename):
+        """
+        Save crossword assignment to an image file.
+        """
+        from PIL import Image, ImageDraw, ImageFont
+        cell_size = 100
+        cell_border = 2
+        interior_size = cell_size - 2 * cell_border
+        letters = self.letter_grid(assignment)
 
+        # Create a blank canvas
+        img = Image.new(
+            "RGBA",
+            (self.crossword.width * cell_size,
+             self.crossword.height * cell_size),
+            "black"
+        )
+        font = ImageFont.truetype("assets/fonts/OpenSans-Regular.ttf", 80)
+        draw = ImageDraw.Draw(img)
+
+        for i in range(self.crossword.height):
+            for j in range(self.crossword.width):
+
+                rect = [
+                    (j * cell_size + cell_border,
+                     i * cell_size + cell_border),
+                    ((j + 1) * cell_size - cell_border,
+                     (i + 1) * cell_size - cell_border)
+                ]
+                if self.crossword.structure[i][j]:
+                    draw.rectangle(rect, fill="white")
+                    if letters[i][j]:
+                        w, h = draw.textsize(letters[i][j], font=font)
+                        draw.text(
+                            (rect[0][0] + ((interior_size - w) / 2),
+                             rect[0][1] + ((interior_size - h) / 2) - 10),
+                            letters[i][j], fill="black", font=font
+                        )
+
+        img.save(filename)
+
+    
