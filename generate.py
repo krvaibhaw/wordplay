@@ -103,3 +103,63 @@ class CrosswordCreator():
             for word in set(self.domains[var]):
                 if len(word) != var.length:
                     self.domains[var].remove(word)
+
+    def revise(self, x, y):
+        """
+        Make variable `x` arc consistent with variable `y`.
+        To do so, remove values from `self.domains[x]` for which there is no
+        possible corresponding value for `y` in `self.domains[y]`.
+
+        Return True if a revision was made to the domain of `x`; return
+        False if no revision was made.
+        """
+        revised = False
+        i, j = self.crossword.overlaps[x, y]
+
+        for x_word in set(self.domains[x]):
+            remove = True
+
+            for y_word in self.domains[y]:
+                if x_word[i] == y_word[j]:
+                    remove = False
+
+            if remove:
+                self.domains[x].remove(x_word)
+                revised = True
+
+        return revised
+
+    def ac3(self, arcs=None):
+        """
+        Update `self.domains` such that each variable is arc consistent.
+        If `arcs` is None, begin with initial list of all arcs in the problem.
+        Otherwise, use `arcs` as the initial list of arcs to make consistent.
+
+        Return True if arc consistency is enforced and no domains are empty;
+        return False if one or more domains end up empty.
+        """
+        if arcs is None:
+            arcs = list()
+            for x in self.domains:
+                for y in self.crossword.neighbors(x):
+                    arcs.append((x, y))
+
+        while arcs:
+            x, y = arcs.pop()
+
+            if self.revise(x, y):
+                if not self.domains[x]:
+                    return False
+                for z in self.crossword.neighbors(x) - self.domains[y]:
+                    arcs.append((z, x))
+
+        return True
+
+    def assignment_complete(self, assignment):
+        """
+        Return True if `assignment` is complete (i.e., assigns a value to each
+        crossword variable); return False otherwise.
+        """
+        return not bool(self.crossword.variables - set(assignment))
+
+    
