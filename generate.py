@@ -162,4 +162,32 @@ class CrosswordCreator():
         """
         return not bool(self.crossword.variables - set(assignment))
 
+    def consistent(self, assignment):
+        """
+        Return True if `assignment` is consistent (i.e., words fit in crossword
+        puzzle without conflicting characters); return False otherwise.
+        """
+        used_words = set()
+
+        for var in assignment:
+
+            # Distinct values
+            if assignment[var] not in used_words:
+                used_words.add(assignment[var])
+            else:
+                return False
+
+            # Checking correct length
+            if len(assignment[var]) != var.length:
+                return False
+
+            # No conflicts between neighbors
+            for neighbor in self.crossword.neighbors(var):
+                if neighbor in assignment:
+                    i, j = self.crossword.overlaps[var, neighbor]
+                    if assignment[var][i] != assignment[neighbor][j]:
+                        return False
+
+        return True
+
     
