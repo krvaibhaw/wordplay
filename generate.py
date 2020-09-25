@@ -190,4 +190,41 @@ class CrosswordCreator():
 
         return True
 
+    def order_domain_values(self, var, assignment):
+        """
+        Return a list of values in the domain of `var`, in order by
+        the number of values they rule out for neighboring variables.
+        The first value in the list, for example, should be the one
+        that rules out the fewest values among the neighbors of `var`.
+        """
+        n = dict()
+
+        for value in self.domains[var]:
+            n[value] = 0
+            for neighbor in self.crossword.neighbors(var) - assignment:
+                if value in self.domains[neighbor]:
+                    n[value] += 1
+
+        return sorted(n, key=n.get)
+
+    def select_unassigned_variable(self, assignment):
+        """
+        Return an unassigned variable not already part of `assignment`.
+        Choose the variable with the minimum number of remaining values
+        in its domain. If there is a tie, choose the variable with the highest
+        degree. If there is a tie, any of the tied variables are acceptable
+        return values.
+        """
+        best = None
+
+        for var in self.crossword.variables - set(assignment):
+            if (
+                best is None or
+                len(self.domains[var]) < len(self.domains[best]) or
+                len(self.crossword.neighbors(var)) > len(self.crossword.neighbors(best))
+            ):
+                best = var
+
+        return best
+
     
