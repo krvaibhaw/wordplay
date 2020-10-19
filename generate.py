@@ -227,4 +227,31 @@ class CrosswordCreator():
 
         return best
 
-    
+    def backtrack(self, assignment):
+        """
+        Using Backtracking Search, take as input a partial assignment for the
+        crossword and return a complete assignment if possible to do so.
+
+        `assignment` is a mapping from variables (keys) to words (values).
+
+        If no assignment is possible, return None.
+        """
+        if self.assignment_complete(assignment):
+            return assignment
+
+        var = self.select_unassigned_variable(assignment)
+
+        for value in self.domains[var]:
+            assignment[var] = value
+
+            if self.consistent(assignment):
+                result = self.backtrack(assignment)
+                if result is not None:
+                    return result
+
+            assignment.pop(var)
+
+        return None
+
+
+
