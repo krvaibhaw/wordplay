@@ -9,3 +9,18 @@
 
 
 ## Executing the Program
+
+1. Make sure [Python 3.6+](https://www.python.org/downloads/) is installed.
+2. Install requirements  
+```
+    $ pip install requirements.txt
+``` 
+3. Run the program :
+```
+    $ python generator.py <puzzle structure path>/<file.txt> <wordlist path>/<file.txt>
+```
+Example :
+
+```
+    $ python generator.py data/structure1.txt data/words1.txt
+``` 
