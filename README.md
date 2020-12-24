@@ -26,6 +26,6 @@ Example :
 ``` 
 4. Program output :
 ```
-    Solved crossword puzzle.
+    Solved crossword puzzle. 
 ```
 
