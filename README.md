@@ -8,6 +8,14 @@
 ![](https://img.shields.io/badge/Python-blue)
 
 
+A crossword is a word puzzle that usually takes the form of a square or a rectangular grid of white- and black-shaded squares. The game's goal is to fill the white squares with letters, forming words or phrases, by solving clues, which lead to the answers.
+
+
+```
+Input : Crossword puzzle structure along with the wordlist.
+Output : Solved crossword puzzle.
+```
+
 ## Executing the Program
 
 1. Make sure [Python 3.6+](https://www.python.org/downloads/) is installed.
