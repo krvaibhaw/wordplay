@@ -13,7 +13,7 @@ A crossword is a word puzzle that usually takes the form of a square or a rectan
 
 ```
 Input : Crossword puzzle structure along with the wordlist.
-Output : Solved crossword puzzle.
+Output : Solved crossword puzzle. 
 ```
  
 ## Executing the Program
