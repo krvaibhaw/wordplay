@@ -33,7 +33,7 @@ Example :
     $ python generator.py data/structure1.txt data/words1.txt
 ``` 
 4. Program output :
-```
+``` 
     Solved crossword puzzle.
 ```
 
